@@ -1,0 +1,22 @@
+{
+  "name": "opnet-storage",
+  "version": "0.1.0",
+  "description": "storage abstractions for OP_NET",
+  "main": "lib/index.js",
+  "repository": "https://github.com/youngslohmlife/opnet-storage",
+  "author": "FREEJEFFREY",
+  "license": "MIT",
+  "scripts": {
+    "build": "asc --config asconfig.json assembly/index.ts"
+  },
+  "private": false,
+  "devDependencies": {
+    "assemblyscript": "^0.27.29"
+  },
+  "dependencies": {
+    "@btc-vision/btc-runtime": "https://github.com/btc-vision/btc-runtime",
+    "as-bignum": "^0.3.1",
+    "fast-sha256-as": "https://github.com/sandshrewmetaprotocols/fast-sha256-as",
+    "metashrew-as": "https://github.com/sandshrewmetaprotocols/metashrew-as"
+  }
+}

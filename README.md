@@ -255,7 +255,60 @@ class MyContract extends OP_NET {
 }
 ```
 
-### StorageBacked<T>
+### StorageValue<T>
+
+Models a primitive value in storage (boolean, u8, u16, u32, u64).
+
+```js
+import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
+import { u256 } from "as-bignum/assembly";
+
+abstract class StorageValue<T> {
+  public inner: u256;
+  public slot: StorageSlot;
+  constructor(slot: StorageSlot);
+  static at<T>(slot: StorageSlot): StorageValue<T>;
+  save(): StorageValue<T>;
+  set(v: T): StorageValue<T>;
+  load(): StorageValue<T>;
+  unwrap(): T;
+}
+```
+
+Instantiate with the `StorageValue.at<T>(slot)` method to get a handle in storage to a primitive.
+
+Use `value.load()` to load the value from storage.
+
+Call `StorageValue#set(v: T)` to commit a new value to storage.
+
+For a u256 type, the unwrap() method is unusable, access the `inner` property instead.
+
+```js
+import {
+  StorageValue,
+  StorageSlot,
+  StorageLayout
+} from "opnet-storage/assembly";
+
+class MyContract extends OP_NET {
+  public governance: StorageValue<u256>;
+  public maxEntities: StorageValue<u32>;
+  constructor() {
+    const layout = new StorageLayout();
+    this.governance = StorageValue.at<u256>(StorageSlot.at(layout.next())).load();
+    this.maxEntities = StorageValue.at<u32>(StorageSlot.at(layout.next())).load();
+  }
+  increaseMaxEntities(): BinaryWriter {
+    this.maxEntities.set(this.maxEntities.unwrap() + 1);
+    const result = new BinaryWriter();
+    result.writeU32(this.maxEntites.unwrap());
+    return result; 
+  }
+}
+```
+
+
+### StorageStruct<T>
 
 Models a struct type in storage.
 
@@ -263,14 +316,14 @@ Type argument must be a class whose constructor parametes are a single Array<u25
 
 Similarly, the `serialize(): Array<u256>` method must be implemented on the type which should contain the logic to serialize the structure to a list of u256 values, to be laid out in storage in a linear manner.
 
-Access the `inner` property of the StorageBacked<T> instance to access the underlying structure.
+Access the `inner` property of the StorageStruct<T> instance to access the underlying structure.
 
 TODO: implement decorator to generate a constructor and serialize method.
 
 ```js
-class StorageBacked<T> {
+class StorageStruct<T> {
   public inner: T;
-  static load(slot: StorageSlot): StorageBacked<T>;
+  static load(slot: StorageSlot): StorageStruct<T>;
   save(): void;
 }
 ```

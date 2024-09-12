@@ -255,6 +255,27 @@ class MyContract extends OP_NET {
 }
 ```
 
+### StorageBacked<T>
+
+Models a struct type in storage.
+
+Type argument must be a class whose constructor parametes are a single Array<u256>, which represents the list of u256 values as they appear in storage. The constructor should be responsible for decoding the Array<u256> into class properties.
+
+Similarly, the `serialize(): Array<u256>` method must be implemented on the type which should contain the logic to serialize the structure to a list of u256 values, to be laid out in storage in a linear manner.
+
+Access the `inner` property of the StorageBacked<T> instance to access the underlying structure.
+
+TODO: implement decorator to generate a constructor and serialize method.
+
+```js
+class StorageBacked<T> {
+  public inner: T;
+  static load(slot: StorageSlot): StorageBacked<T>;
+  save(): void;
+}
+```
+
+
 
 ## Author
 

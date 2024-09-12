@@ -289,6 +289,8 @@ import {
   StorageSlot,
   StorageLayout
 } from "opnet-storage/assembly";
+import { u256 } from "as-bignum/assembly";
+import { BytesWriter } from "@btc-vision/btc-runtime/runtime/buffer/BytesWriter";
 
 class MyContract extends OP_NET {
   public governance: StorageValue<u256>;
@@ -298,9 +300,9 @@ class MyContract extends OP_NET {
     this.governance = StorageValue.at<u256>(StorageSlot.at(layout.next())).load();
     this.maxEntities = StorageValue.at<u32>(StorageSlot.at(layout.next())).load();
   }
-  increaseMaxEntities(): BinaryWriter {
+  increaseMaxEntities(): BytesWriter {
     this.maxEntities.set(this.maxEntities.unwrap() + 1);
-    const result = new BinaryWriter();
+    const result = new BytesWriter();
     result.writeU32(this.maxEntites.unwrap());
     return result; 
   }
@@ -328,6 +330,46 @@ class StorageStruct<T> {
 }
 ```
 
+Example:
+
+```js
+import {
+  StorageStruct,
+  StorageSlot,
+  StorageBacked,
+  StorageLayout
+} from "opnet-storage/assembly";
+import { u128, u256 } from "as-bignum/assembly";
+import { BytesWriter } from "@btc-vision/btc-runtime/runtime/buffer/BytesWriter";
+
+class Claim implements StorageBacked {
+  public bond: u128;
+  public max: u128;
+  constructor(ary: Array<u256>) {
+    this.bond = (ary[0] >> 128).toU128();
+    this.max = ary[0].toU128();
+  }
+  serialize(): Array<u256> {
+    const result = new Array<u256>(0);
+    result.push((u256.from(this.bond) << 128) | u256.from(this.max));
+    return result;
+  }
+}
+
+class MyContract extends OP_NET {
+  public addressToClaim: StorageSlot;
+  constructor() {
+    const layout = new StorageLayout();
+    this.addressToClaim = StorageSlot.at(layout.next());
+  }
+  increaseBondForAddress(address: u256, amount: u128): BytesWriter {
+    const claim = StorageStruct.load<Claim>(this.addressToClaim.select(changetype<Uint8Array>(address.toBytesBE()).buffer));
+    claim.inner.bond = claim.inner.bond + amount; // Use SafeMath for this
+    claim.save();
+    return new BytesWriter();
+  }
+}
+```
 
 
 ## Author

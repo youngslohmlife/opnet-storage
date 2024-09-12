@@ -1,4 +1,4 @@
-export abstract class StorageBacked {
-  serialize(): Array<u256> {}
+export interface StorageBacked {
+  serialize(): Array<u256>;
 }
 

@@ -37,12 +37,13 @@ abstract class StorageSlot {
 Wraps an ArrayBuffer as an StorageSlot.
 
 ```js
-import { primitiveToBuffer } from "metashrew-as/assembly/utils/utils";
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
+import { sha256 } from "fast-sha256-as/assembly/sha256";
+import { u256 } from "as-bignum/assembly";
 
-export function _start(): void {
-  const pointer = StorageSlot.wrap(primitiveToBuffer(<u32>0x01010101)); // creates an StorageSlot for 0x01010101
-  pointer.set(u256.from(0x20202020));
+export function setPointer(): StorageSlot {
+  const pointer = StorageSlot.wrap(sha256(String.UTF8.encode("test")));
+  pointer.set(u256.from(111));
 }
 ```
 
@@ -52,10 +53,12 @@ Converts `keyword` to an ArrayBuffer then wraps the ArrayBuffer as an StorageSlo
 
 ```js
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
+import { sha256 } from "fast-sha256-as/assembly/sha256";
+import { u256 } from "as-bignum/assembly";
 
-export function _start(): void {
-  const pointer = StorageSlot.for("/some-table/");
-  pointer.set(u256.from(0x12121212));
+export function setPointer(): StorageSlot {
+  const pointer = StorageSlot.keyword("test");
+  pointer.set(u256.from(111));
 }
 ```
 
@@ -67,7 +70,7 @@ Grows the StorageSlot by appending another byte slice to the end of the ArrayBuf
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 import { sha256 } from "fast-sha256-as/assembly/sha256";
 
-export function _start(): void {
+export function setPointer(): void {
   const pointer = StorageSlot.for("/value/by-txid/").select(sha256(String.UTF8.encode("test")));
   pointer.set(u256.from(0x0101010101));
 }
@@ -80,7 +83,7 @@ Encodes `word` as UTF8 bytes and uses the ArrayBuffer to grow the key represente
 ```js
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 
-export function _start(): void {
+export function setPointer(): void {
   StorageSlot.for("/txid/number/").select(new ArrayBuffer(1)).keyword("/tag").set(u256.from(111));
 }
 ```
@@ -91,12 +94,11 @@ Gets the value stored at the key represented by the StorageSlot. The result is a
 
 ```js
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
-import { Box } from "opnet-storage/assembly/utils/box";
-import { console } from "opnet-storage/assembly/utils/logging";
+import { Box } from "metashrew-as/assembly/utils/box";
 
-export function _start(): void {
+export function getPointer(): void {
   const pointer = StorageSlot.for("/txid/last");
-  console.log(Box.from(pointer.get()).toHexString());
+  console.log(Box.from(pointer.get().toBytesBE()).toHexString());
 }
 ```
 
@@ -108,7 +110,7 @@ Sets the value in the key-value database corresponding to the key represented by
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 import { u256 } from "as-bignum/assembly";
 
-export function _start(): void {
+export function setPointer(): void {
   StorageSlot.for("/txid/last").set(u256.from(111));
 }
 ```
@@ -122,9 +124,10 @@ Appends `"/length"` to the end of the key and returns a new StorageSlot. Useful 
 ```js
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 
-export function _start(): void {
+export function getLength(): u32 {
   const length = StorageSlot.for("/txid/list").lengthKey().get().toU32();
   console.log(length.toString());
+  return length;
 }
 ```
 
@@ -138,7 +141,7 @@ Calls `StorageSlot#lengthKey()` then `StorageSlot#getValue<u32>()` on the key it
 // same program as above, in effect
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 
-export function _start(): void {
+export function getLength(): void {
   const length = StorageSlot.for("/txid/list").length();
   console.log(length.toString(10));
 }
@@ -172,7 +175,7 @@ Increases the length of the list by 1. Returns the StorageSlot at the newly crea
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 import { u256 } from "as-bignum/assembly";
 
-export function _start(): void {
+export function setPointer(): void {
   const pointer = StorageSlot.for("/txid/values");
   pointer.extend().set(u256.from(1));
 }
@@ -187,10 +190,10 @@ Selects the value in a list at `index`. Returns the StorageSlot at that slot.
 ```js
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 
-export function _start(): void {
+export function getFirstListItem(): u256 {
   const pointer = StorageSlot.for("/txid/values");
   const first = StorageSlot.for("/txid/values").selectIndex(0);
-  first.get().toString();
+  return first.get();
 }
 ```
 
@@ -201,7 +204,7 @@ Deletes the value at the key represented by the StorageSlot.
 ```js
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 
-export function _start(): void {
+export function nullifyValue(): void {
   const pointer = StorageSlot.for("/some-key");
   pointer.nullify() // deletes the value at "/some-key"
 }
@@ -216,11 +219,11 @@ Appends an ArrayBuffer to the list of values at the key represented by the Stora
 ```js
 import { StorageSlot } from "opnet-storage/assembly/StorageSlot";
 
-export function _start(): void {
+export function appendItems(): void {
   const pointer = StorageSlot.for("/some-list");
   pointer.append(String.UTF8.encode("some value"));
   pointer.append(String.UTF8.encode("other value"));
-  console.log(String.UTF8.decode(pointer.pop())) // logs "other value";
+  console.log(String.UTF8.decode(pointer.selectIndex(pointer.length() - 1).get().toBytesBE())) // logs "other value";
 }
 ```
 

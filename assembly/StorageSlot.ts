@@ -23,6 +23,9 @@ export class StorageSlot {
   select(v: ArrayBuffer): StorageSlot {
     return new StorageSlot(this.pointer, fromArrayBuffer(sha256(concat(toArrayBuffer(this.subPointer), sha256(v)))));
   }
+  selectValue(v: u256): StorageSlot {
+    return this.select(changetype<Uint8Array>(v.toBytesBE()).buffer);
+  }
   keyword(key: string): StorageSlot {
     return this.select(String.UTF8.encode(key));
   }

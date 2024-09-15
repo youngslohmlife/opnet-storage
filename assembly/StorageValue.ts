@@ -21,7 +21,7 @@ export class StorageValue<T> {
     return this;
   }
   load(): StorageValue<T> {
-    this.vlaue = this.slot.get();
+    this.value = this.slot.get();
     return this;
   }
   unwrap(): T {

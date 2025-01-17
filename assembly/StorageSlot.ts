@@ -1,7 +1,7 @@
 import { MemorySlotPointer } from "@btc-vision/btc-runtime/runtime/memory/MemorySlotPointer";
 import { concat, toArrayBuffer, fromArrayBuffer } from "./utils/utils";
 import { sha256 } from "fast-sha256-as/assembly/sha256";
-import { BlockchainEnvironment } from "@btc-vision/btc-runtime/runtime/env/BTCEnvironment";
+import { Blockchain } from "@btc-vision/btc-runtime/runtime/";
 import { u256 } from "as-bignum/assembly";
 
 export class StorageSlot {
@@ -30,10 +30,10 @@ export class StorageSlot {
     return this.select(String.UTF8.encode(key));
   }
   get(): u256 {
-    return changetype<BlockchainEnvironment>(0).getStorageAt(this.pointer, this.subPointer, u256.Zero);
+    return changetype<Blockchain>(0).getStorageAt(this.pointer, this.subPointer, u256.Zero);
   }
   set(v: u256): void {
-    changetype<BlockchainEnvironment>(0).setStorageAt(this.pointer, this.subPointer, v);
+    changetype<Blockchain>(0).setStorageAt(this.pointer, this.subPointer, v);
   }
   lengthKey(): StorageSlot {
     return this.keyword("/length");

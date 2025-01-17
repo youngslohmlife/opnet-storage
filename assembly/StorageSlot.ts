@@ -2,7 +2,7 @@ import { MemorySlotPointer } from "@btc-vision/btc-runtime/runtime/memory/Memory
 import { concat, toArrayBuffer, fromArrayBuffer } from "./utils/utils";
 import { sha256 } from "fast-sha256-as/assembly/sha256";
 import { Blockchain } from "@btc-vision/btc-runtime/runtime/";
-import { u256 } from "as-bignum/assembly";
+import { u256 } from "@btc-vision/as-bignum/assembly";
 
 export class StorageSlot {
   public pointer: u16;

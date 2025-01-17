@@ -1,4 +1,4 @@
-import { u256 } from "as-bignum/assembly";
+import { u256 } from "@btc-vision/as-bignum/assembly";
 import { StorageSlot } from "./StorageSlot";
 
 export class StorageValue<T> {
@@ -25,6 +25,6 @@ export class StorageValue<T> {
     return this;
   }
   unwrap(): T {
-    return load<T>(changetype<usize>(this.value.toBytesLE().buffer));
+    return load<T>(changetype<usize>(this.value.toBytes().buffer));
   }
 }

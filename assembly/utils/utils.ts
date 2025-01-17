@@ -1,4 +1,4 @@
-import { u128, u256 } from 'as-bignum/assembly';
+import { u128, u256 } from '@btc-vision/as-bignum/assembly';
 import { MemorySlotPointer } from '@btc-vision/btc-runtime/runtime/memory/MemorySlotPointer';
 
 import {
@@ -6,7 +6,7 @@ import {
     bech32m as _bech32m,
     toWords,
     fromWords,
-} from 'metashrew-as/assembly/utils/b32';
+} from "./b32";
 
 export function bech32m(v: u256): string {
     return String.UTF8.decode(_bech32m(String.UTF8.encode('bc'), toWords(toArrayBuffer(v))));

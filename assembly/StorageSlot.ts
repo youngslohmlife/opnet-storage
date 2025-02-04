@@ -24,16 +24,16 @@ export class StorageSlot {
     return new StorageSlot(this.pointer, fromArrayBuffer(sha256(concat(toArrayBuffer(this.subPointer), sha256(v)))));
   }
   selectValue(v: u256): StorageSlot {
-    return this.select(changetype<Uint8Array>(v.toBytesBE()).buffer);
+    return this.select(changetype<Uint8Array>(v.toBytes(true)).buffer);
   }
   keyword(key: string): StorageSlot {
     return this.select(String.UTF8.encode(key));
   }
   get(): u256 {
-    return changetype<Blockchain>(0).getStorageAt(this.pointer, this.subPointer, u256.Zero);
+    return changetype<typeof Blockchain>(0).getStorageAt(this.pointer, this.subPointer, u256.Zero);
   }
   set(v: u256): void {
-    changetype<Blockchain>(0).setStorageAt(this.pointer, this.subPointer, v);
+    changetype<typeof Blockchain>(0).setStorageAt(this.pointer, this.subPointer, v);
   }
   lengthKey(): StorageSlot {
     return this.keyword("/length");

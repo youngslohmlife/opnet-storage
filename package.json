@@ -14,7 +14,7 @@
     "assemblyscript": "^0.27.29"
   },
   "dependencies": {
-    "@btc-vision/as-bignum": "^0.0.2",
+    "@btc-vision/as-bignum": "^0.0.4",
     "@eslint/js": "^9.10.0",
     "@btc-vision/btc-runtime": "git+https://github.com/btc-vision/btc-runtime",
     "fast-sha256-as": "https://github.com/sandshrewmetaprotocols/fast-sha256-as"

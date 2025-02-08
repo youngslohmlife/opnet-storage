@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@btc-vision/as-bignum':
-        specifier: ^0.0.2
-        version: 0.0.2
+        specifier: ^0.0.4
+        version: 0.0.4
       '@btc-vision/btc-runtime':
         specifier: git+https://github.com/btc-vision/btc-runtime
         version: https://codeload.github.com/btc-vision/btc-runtime/tar.gz/bbf163b88b3a9e9e081479e45d98632ebfbbea4d(@types/node@22.10.7)(eslint@9.18.0)
@@ -32,6 +32,9 @@ packages:
 
   '@btc-vision/as-bignum@0.0.2':
     resolution: {integrity: sha512-O4o8RPoySXFkqb3G7ZFpA03kRyMQKEWF/czx5Xp1srNEzgbEsJ8u8SuBsoJT8R/UCNhyLKDoepCohBX/ixa3zQ==}
+
+  '@btc-vision/as-bignum@0.0.4':
+    resolution: {integrity: sha512-qPPy3qq4dYMg6ULk/OsxYwMgSmUWsOqZ8mYtdy9bYcaJW0qi8r0WHLre/qFPk3SS/RqKhqPieuvPQlEAKpJSmg==}
 
   '@btc-vision/btc-runtime@https://codeload.github.com/btc-vision/btc-runtime/tar.gz/bbf163b88b3a9e9e081479e45d98632ebfbbea4d':
     resolution: {tarball: https://codeload.github.com/btc-vision/btc-runtime/tar.gz/bbf163b88b3a9e9e081479e45d98632ebfbbea4d}
@@ -797,6 +800,8 @@ snapshots:
   '@assemblyscript/loader@0.27.31': {}
 
   '@btc-vision/as-bignum@0.0.2': {}
+
+  '@btc-vision/as-bignum@0.0.4': {}
 
   '@btc-vision/btc-runtime@https://codeload.github.com/btc-vision/btc-runtime/tar.gz/bbf163b88b3a9e9e081479e45d98632ebfbbea4d(@types/node@22.10.7)(eslint@9.18.0)':
     dependencies:

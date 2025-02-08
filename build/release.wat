@@ -3,12 +3,9 @@
  (type $1 (func (param i32 i32 i32 i32)))
  (type $2 (func (param i32 i32) (result i32)))
  (type $3 (func (param i32 i32 i32 i32) (result i32)))
- (type $4 (func (param i64 i64 i64 i64)))
- (type $5 (func (param i32)))
  (import "env" "abort" (func $~lib/builtins/abort (param i32 i32 i32 i32)))
  (global $~lib/rt/stub/offset (mut i32) (i32.const 0))
  (global $~argumentsLength (mut i32) (i32.const 0))
- (global $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain (mut i32) (i32.const 0))
  (memory $0 1 32768)
  (data $0 (i32.const 1036) ",")
  (data $0.1 (i32.const 1048) "\02\00\00\00\14\00\00\00u\00s\00e\00 \00s\00t\00r\00i\00c\00t")
@@ -62,28 +59,6 @@
  (data $22.1 (i32.const 4552) "\01")
  (data $23 (i32.const 4572) "\1c")
  (data $23.1 (i32.const 4584) "\01")
- (data $24 (i32.const 4604) "L")
- (data $24.1 (i32.const 4616) "\02\00\00\002\00\00\00t\00r\00a\00n\00s\00f\00e\00r\00(\00a\00d\00d\00r\00e\00s\00s\00,\00u\00i\00n\00t\002\005\006\00)")
- (data $25 (i32.const 4684) "L")
- (data $25.1 (i32.const 4696) "\02\00\00\000\00\00\00a\00p\00p\00r\00o\00v\00e\00(\00a\00d\00d\00r\00e\00s\00s\00,\00u\00i\00n\00t\002\005\006\00)")
- (data $26 (i32.const 4764) "\\")
- (data $26.1 (i32.const 4776) "\02\00\00\00J\00\00\00t\00r\00a\00n\00s\00f\00e\00r\00F\00r\00o\00m\00(\00a\00d\00d\00r\00e\00s\00s\00,\00a\00d\00d\00r\00e\00s\00s\00,\00u\00i\00n\00t\002\005\006\00)")
- (data $27 (i32.const 4860) "\9c")
- (data $27.1 (i32.const 4872) "\02\00\00\00\82\00\00\00~\00l\00i\00b\00/\00@\00b\00t\00c\00-\00v\00i\00s\00i\00o\00n\00/\00b\00t\00c\00-\00r\00u\00n\00t\00i\00m\00e\00/\00r\00u\00n\00t\00i\00m\00e\00/\00e\00n\00v\00/\00B\00l\00o\00c\00k\00c\00h\00a\00i\00n\00E\00n\00v\00i\00r\00o\00n\00m\00e\00n\00t\00.\00t\00s")
- (data $28 (i32.const 5020) "<")
- (data $28.1 (i32.const 5032) "\01\00\00\00 \00\00\00/\fc\ff\ff\fe\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff")
- (data $29 (i32.const 5084) ",")
- (data $29.1 (i32.const 5096) "\t\00\00\00\10\00\00\00\b0\13\00\00\b0\13\00\00 \00\00\00 ")
- (data $30 (i32.const 5132) "<")
- (data $30.1 (i32.const 5144) "\01\00\00\00 \00\00\00\98\17\f8\16\b1[(\d9Y(\ce-\db\fc\9b\02p\b0\87\ce\95\a0bU\ac\bb\dc\f9\eff\bey")
- (data $31 (i32.const 5196) ",")
- (data $31.1 (i32.const 5208) "\t\00\00\00\10\00\00\00 \14\00\00 \14\00\00 \00\00\00 ")
- (data $32 (i32.const 5244) "<")
- (data $32.1 (i32.const 5256) "\01\00\00\00 \00\00\00\b8\d4\10\fb\ff\08}\c4\19T\85\a6HD\17\fd\a8\08\e1\0e\fcK\a4]e\c4\a3\a6w\da:H")
- (data $33 (i32.const 5308) ",")
- (data $33.1 (i32.const 5320) "\t\00\00\00\10\00\00\00\90\14\00\00\90\14\00\00 \00\00\00 ")
- (data $34 (i32.const 5356) "|")
- (data $34.1 (i32.const 5368) "\02\00\00\00f\00\00\00~\00l\00i\00b\00/\00@\00b\00t\00c\00-\00v\00i\00s\00i\00o\00n\00/\00a\00s\00-\00b\00i\00g\00n\00u\00m\00/\00a\00s\00s\00e\00m\00b\00l\00y\00/\00i\00n\00t\00e\00g\00e\00r\00/\00u\002\005\006\00.\00t\00s")
  (export "memory" (memory $0))
  (start $~start)
  (func $~lib/rt/stub/__new (param $0 i32) (param $1 i32) (result i32)
@@ -492,53 +467,12 @@
   i32.store offset=12
   local.get $2
  )
- (func $~lib/@btc-vision/as-bignum/assembly/integer/u256/u256#constructor (param $0 i64) (param $1 i64) (param $2 i64) (param $3 i64)
-  (local $4 i32)
-  i32.const 32
-  i32.const 10
-  call $~lib/rt/stub/__new
-  local.tee $4
-  local.get $0
-  i64.store
-  local.get $4
-  local.get $1
-  i64.store offset=8
-  local.get $4
-  local.get $2
-  i64.store offset=16
-  local.get $4
-  local.get $3
-  i64.store offset=24
- )
- (func $~lib/@btc-vision/btc-runtime/runtime/env/BlockchainEnvironment/BlockchainEnvironment#get:nextPointer (param $0 i32)
-  local.get $0
-  i32.load16_u offset=24
-  i32.const 65535
-  i32.eq
-  if
-   i32.const 0
-   i32.const 4880
-   i32.const 81
-   i32.const 13
-   call $~lib/builtins/abort
-   unreachable
-  end
-  local.get $0
-  local.get $0
-  i32.load16_u offset=24
-  i32.const 1
-  i32.add
-  i32.store16 offset=24
-  local.get $0
-  i32.load16_u offset=24
-  drop
- )
  (func $~start
   (local $0 i32)
   (local $1 i32)
   (local $2 i32)
   (local $3 i32)
-  i32.const 5484
+  i32.const 4604
   global.set $~lib/rt/stub/offset
   i32.const 1
   global.set $~argumentsLength
@@ -708,103 +642,5 @@
   local.get $1
   i32.const 0
   i32.store offset=32
-  local.get $1
-  global.set $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain
-  i64.const 0
-  i64.const 0
-  i64.const 0
-  i64.const 0
-  call $~lib/@btc-vision/as-bignum/assembly/integer/u256/u256#constructor
-  global.get $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain
-  call $~lib/@btc-vision/btc-runtime/runtime/env/BlockchainEnvironment/BlockchainEnvironment#get:nextPointer
-  global.get $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain
-  call $~lib/@btc-vision/btc-runtime/runtime/env/BlockchainEnvironment/BlockchainEnvironment#get:nextPointer
-  global.get $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain
-  call $~lib/@btc-vision/btc-runtime/runtime/env/BlockchainEnvironment/BlockchainEnvironment#get:nextPointer
-  global.get $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain
-  call $~lib/@btc-vision/btc-runtime/runtime/env/BlockchainEnvironment/BlockchainEnvironment#get:nextPointer
-  global.get $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain
-  call $~lib/@btc-vision/btc-runtime/runtime/env/BlockchainEnvironment/BlockchainEnvironment#get:nextPointer
-  global.get $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain
-  call $~lib/@btc-vision/btc-runtime/runtime/env/BlockchainEnvironment/BlockchainEnvironment#get:nextPointer
-  global.get $~lib/@btc-vision/btc-runtime/runtime/env/index/Blockchain
-  call $~lib/@btc-vision/btc-runtime/runtime/env/BlockchainEnvironment/BlockchainEnvironment#get:nextPointer
-  block $__inlined_func$start:~lib/@btc-vision/btc-runtime/runtime/index$2
-   block $folding-inner0
-    i32.const 5116
-    i32.load
-    local.tee $0
-    if (result i32)
-     local.get $0
-     i32.const 31
-     i32.and
-    else
-     i32.const 1
-    end
-    br_if $folding-inner0
-    i32.const 5108
-    i32.load
-    local.tee $0
-    i64.load
-    local.get $0
-    i64.load offset=8
-    local.get $0
-    i64.load offset=16
-    local.get $0
-    i64.load offset=24
-    call $~lib/@btc-vision/as-bignum/assembly/integer/u256/u256#constructor
-    i32.const 5228
-    i32.load
-    local.tee $0
-    if (result i32)
-     local.get $0
-     i32.const 31
-     i32.and
-    else
-     i32.const 1
-    end
-    br_if $folding-inner0
-    i32.const 5220
-    i32.load
-    local.tee $0
-    i64.load
-    local.get $0
-    i64.load offset=8
-    local.get $0
-    i64.load offset=16
-    local.get $0
-    i64.load offset=24
-    call $~lib/@btc-vision/as-bignum/assembly/integer/u256/u256#constructor
-    i32.const 5340
-    i32.load
-    local.tee $0
-    if (result i32)
-     local.get $0
-     i32.const 31
-     i32.and
-    else
-     i32.const 1
-    end
-    br_if $folding-inner0
-    i32.const 5332
-    i32.load
-    local.tee $0
-    i64.load
-    local.get $0
-    i64.load offset=8
-    local.get $0
-    i64.load offset=16
-    local.get $0
-    i64.load offset=24
-    call $~lib/@btc-vision/as-bignum/assembly/integer/u256/u256#constructor
-    br $__inlined_func$start:~lib/@btc-vision/btc-runtime/runtime/index$2
-   end
-   i32.const 0
-   i32.const 5376
-   i32.const 80
-   i32.const 5
-   call $~lib/builtins/abort
-   unreachable
-  end
  )
 )
